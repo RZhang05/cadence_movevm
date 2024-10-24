@@ -10,20 +10,20 @@ run-all: run-dynamic
 
 .PHONY: build-dynamic
 build-dynamic:
-	@cd lib/hello && cargo build --release
-	@cp lib/hello/target/release/hello.dll lib/
-	go build main_dynamic.go
+	@cd lib/sample && cargo build --release
+	@cp lib/sample/target/release/libsample.so lib/
+	go build -ldflags="-r $(ROOT_DIR)lib" main.go
 
 .PHONY: run-dynamic
 run-dynamic: build-dynamic
-	@./main_dynamic
+	@./main
 
 # This is just for running the Rust lib tests natively via cargo
 .PHONY: test-rust-lib
 test-rust-lib:
-	@cd lib/hello && cargo test -- --nocapture
+	@cd lib/sample && cargo test -- --nocapture
 
 .PHONY: clean
 clean:
-	rm -rf main_dynamic lib/libhello.dll lib/hello/target
+	rm -rf main lib/libsample.so lib/libsample.a lib/sample/target lib/sample/Cargo.lock
 
