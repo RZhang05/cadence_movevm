@@ -1,0 +1,16 @@
+---
+compiled_package_info:
+  package_name: fib
+  address_alias_instantiation: {}
+  source_digest: 6AFC0ABFFEF8AD2CD22DAADFC0C5A1ECA2D6F14DEDC05CC1E81E49592F0405CB
+  build_flags:
+    dev_mode: false
+    test_mode: false
+    generate_docs: false
+    generate_abis: false
+    install_dir: ~
+    force_recompilation: false
+    additional_named_addresses: {}
+    architecture: ~
+    fetch_deps_only: false
+dependencies: []

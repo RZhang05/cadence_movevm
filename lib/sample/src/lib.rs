@@ -1,4 +1,7 @@
 use std::ffi::CStr;
+use vm::run_module;
+
+pub mod vm;
 
 #[no_mangle]
 pub extern "C" fn echo(message: *const libc::c_char) {
@@ -7,7 +10,7 @@ pub extern "C" fn echo(message: *const libc::c_char) {
     println!("{}", message);
 }
 
-fn fibonacci(n: u32) -> u32 {
+fn fibonacci(n: u64) -> u64 {
     if n < 2 {
         return n;
     }
@@ -17,15 +20,14 @@ fn fibonacci(n: u32) -> u32 {
 
 #[no_mangle]
 pub extern "C" fn fib(a: libc::c_int) -> libc::c_int {
-    return fibonacci(a as u32) as libc::c_int;
+    return fibonacci(a as u64) as libc::c_int;
 }
 
-fn recursive_fib(n: u32) -> u32 {
-    // TODO invoke movevm
-    return 0
+fn recursive_fib(n: u64) -> u64 {
+    return run_module("/home/dev/work/cadence_movevm/lib/sample/src/build/fib/bytecode_modules/M.mv", n);
 }
 
 #[no_mangle]
 pub extern "C" fn cdcfib(a: libc::c_int) -> libc::c_int {
-    return recursive_fib(a as u32) as libc::c_int;
+    return recursive_fib(a as u64) as libc::c_int;
 }
