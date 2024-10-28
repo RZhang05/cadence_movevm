@@ -1,12 +1,10 @@
 ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 
-# PHONY means that it doesn't correspond to a file; it always runs the build commands.
+.PHONY: run-all
+run-all: run-dynamic
 
 .PHONY: build-all
 build-all: build-dynamic
-
-.PHONY: run-all
-run-all: run-dynamic
 
 .PHONY: build-dynamic
 build-dynamic:
