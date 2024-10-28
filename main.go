@@ -8,13 +8,17 @@ package main
 #include <stdlib.h>
 */
 import "C"
-import "unsafe"
+import _"unsafe"
+
+func Fib(n int) int {
+	return int(C.fib(C.int(n)))
+}
+
+func CadenceFib(n int) int {
+	return int(C.cdcfib(C.int(n)))
+}
 
 func main() {
-	str1 := C.CString("begin test")
-	defer C.free(unsafe.Pointer(str1))
-
-	C.echo(str1)
 	println(C.fib(10))
 	println(C.cdcfib(10))
 }

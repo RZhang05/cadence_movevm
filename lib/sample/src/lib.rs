@@ -3,13 +3,6 @@ use vm::run_module;
 
 pub mod vm;
 
-#[no_mangle]
-pub extern "C" fn echo(message: *const libc::c_char) {
-    let message_cstr = unsafe { CStr::from_ptr(message) };
-    let message = message_cstr.to_str().unwrap();
-    println!("{}", message);
-}
-
 fn fibonacci(n: u64) -> u64 {
     if n < 2 {
         return n;
