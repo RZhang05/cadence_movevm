@@ -17,7 +17,6 @@ use std::fs;
 const TEST_ADDR: AccountAddress = AccountAddress::new([42; AccountAddress::LENGTH]);
 
 pub fn run_module(file_path: &str, param: u64) -> u64 {
-    let code = format!("0x{}", TEST_ADDR.short_str_lossless());
     let bytecode =
         fs::read(file_path).expect("Unable to read bytecode file");
 

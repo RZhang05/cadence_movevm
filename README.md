@@ -9,7 +9,7 @@ BenchmarkGoFib-22                1000000              1296 ns/op               0
 BenchmarkRustFib-22              1498485               810.7 ns/op             0 B/op          0 allocs/op
 BenchmarkCadenceFib-22              3189            352105 ns/op               0 B/op          0 allocs/op
 ```
-Although instantiation of the VM and file reading is included above, it should be a small portion of the benchmark. Commenting out the invocation of the function yields only 3576ns/op. A useful comparison is the existing work w/ custom bytecode which is run again below.
+Although instantiation of the VM and file reading is included above, it should be a small portion of the benchmark. Commenting out the invocation of the function yields only 3576ns/op. A useful comparison is the existing work with a vm on rust which is run again below (https://github.com/SupunS/cadence_vm/tree/rust_go_binding).
 
 ```
 BenchmarkGoFib-22                 915919              1258 ns/op               0 B/op          0 allocs/op
