@@ -6,9 +6,9 @@ use move_core_types::{
     account_address::AccountAddress,
     identifier::Identifier,
     language_storage::{ModuleId, TypeTag},
-    value::{MoveTypeLayout, MoveValue},
+    value::{MoveTypeLayout, MoveValue}, // value (aptos) instead of runtime_value (sui)
 };
-use move_vm_test_utils::{ InMemoryStorage };
+use move_vm_test_utils::{ BlankStorage };
 use move_vm_types::gas::UnmeteredGasMeter;
 use move_binary_format::file_format::CompiledModule;
 use move_binary_format::errors::VMResult;
@@ -20,17 +20,17 @@ pub fn run_module(file_path: &str, param: u64) -> u64 {
     let bytecode =
         fs::read(file_path).expect("Unable to read bytecode file");
 
-    let module = CompiledModule::deserialize(&bytecode).expect("success");
+    let module = CompiledModule::deserialize(&bytecode).expect("success"); // deserialize (aptos) instead of deserialize_with_defaults (sui)
         
     // module and function to call
     let module_id = ModuleId::new(TEST_ADDR, Identifier::new("M").unwrap());
     let fun_name = Identifier::new("fib").unwrap();
 
-    let mut storage = InMemoryStorage::new();
-    storage.publish_or_overwrite_module(module.self_id().clone(), bytecode);
+    let mut storage = BlankStorage::new();
 
     let vm = MoveVM::new(vec![]).unwrap();
     let mut sess = vm.new_session(&storage);
+    sess.publish_module(bytecode, TEST_ADDR, &mut UnmeteredGasMeter).expect("module must load");
 
     let args: Vec<_> = vec![MoveValue::U64(param)]
         .into_iter()
@@ -58,4 +58,27 @@ pub fn run_module(file_path: &str, param: u64) -> u64 {
         _ => {end = 1;}
     }
     return end;
+}
+
+pub fn load_module(file_path: &str) {
+    let bytecode =
+        fs::read(file_path).expect("Unable to read bytecode file");
+
+    let module = CompiledModule::deserialize(&bytecode).expect("success");
+        
+    // module and function to call
+    let module_id = ModuleId::new(TEST_ADDR, Identifier::new("M").unwrap());
+    let fun_name = Identifier::new("fib").unwrap();
+
+    let mut storage = BlankStorage::new();
+
+    let vm = MoveVM::new(vec![]).unwrap();
+    let mut sess = vm.new_session(&storage);
+    sess.publish_module(bytecode, TEST_ADDR, &mut UnmeteredGasMeter).expect("module must load");
+
+    let args: Vec<_> = vec![MoveValue::U64(14)]
+        .into_iter()
+        .map(|val| val.simple_serialize().unwrap())
+        .collect();
+
 }

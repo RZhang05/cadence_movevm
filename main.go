@@ -10,15 +10,15 @@ package main
 import "C"
 import _"unsafe"
 
-func Fib(n int) int {
-	return int(C.fib(C.int(n)))
+func MoveVMFib(n int) int {
+	return int(C.movevmfib(C.int(n)))
 }
 
-func CadenceFib(n int) int {
-	return int(C.cdcfib(C.int(n)))
+func MoveVMLoad() {
+	C.movevmload()
 }
 
 func main() {
-	println(C.fib(10))
-	println(C.cdcfib(10))
+	println(C.fib(14))
+	println(C.movevmfib(14))
 }
