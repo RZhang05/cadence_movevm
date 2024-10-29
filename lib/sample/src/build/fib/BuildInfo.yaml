@@ -2,15 +2,23 @@
 compiled_package_info:
   package_name: fib
   address_alias_instantiation: {}
-  source_digest: 6AFC0ABFFEF8AD2CD22DAADFC0C5A1ECA2D6F14DEDC05CC1E81E49592F0405CB
+  source_digest: 7F7B2802DCC8E039D3E2C665A3797352C5E2B4E9F7E7F868B6D42797230AA40A
   build_flags:
     dev_mode: false
     test_mode: false
     generate_docs: false
-    generate_abis: false
     install_dir: ~
     force_recompilation: false
-    additional_named_addresses: {}
-    architecture: ~
+    lock_file: ~
     fetch_deps_only: false
+    skip_fetch_latest_git_deps: false
+    default_flavor: ~
+    default_edition: ~
+    deps_as_root: false
+    silence_warnings: false
+    warnings_are_errors: false
+    additional_named_addresses: {}
+    lint_flag:
+      no_lint: false
+      lint: false
 dependencies: []
