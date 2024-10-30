@@ -18,3 +18,8 @@ move-vm-test-utils = { git = "https://github.com/aptos-labs/move.git" }
 move-vm-types = { git = "https://github.com/aptos-labs/move.git" }
 move-binary-format = { git = "https://github.com/aptos-labs/move.git" }
 move-vm-integration-tests = { git = "https://github.com/aptos-labs/move.git" }
+criterion = "0.3"
+
+[[bench]]
+name = "benchmark_movevm"
+harness = false

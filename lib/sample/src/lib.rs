@@ -1,4 +1,3 @@
-use std::ffi::CStr;
 use vm::{
     run_module,
     load_module,
