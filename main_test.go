@@ -4,21 +4,39 @@ import (
 	"testing"
 )
 
-func BenchmarkMoveVMFib(b *testing.B) {
+func BenchmarkMoveVMRecFib(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		MoveVMFib(14)
+		MoveVMRecFib(14)
 	}
 }
 
-func BenchmarkMoveVMFibEmpty(b *testing.B) {
+func BenchmarkMoveVMFibRecEmpty(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		MoveVMFib(1)
+		MoveVMRecFib(1)
+	}
+}
+
+func BenchmarkMoveVMImpFib(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		MoveVMImpFib(14)
+	}
+}
+
+func BenchmarkMoveVMFibImpEmpty(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		MoveVMImpFib(1)
 	}
 }
 

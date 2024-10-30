@@ -10,8 +10,12 @@ package main
 import "C"
 import _"unsafe"
 
-func MoveVMFib(n int) int {
-	return int(C.movevmfib(C.int(n)))
+func MoveVMRecFib(n int) int {
+	return int(C.moveRecFib(C.int(n)))
+}
+
+func MoveVMImpFib(n int) int {
+	return int(C.moveImpFib(C.int(n)))
 }
 
 func MoveVMLoad() {
@@ -20,5 +24,6 @@ func MoveVMLoad() {
 
 func main() {
 	println(C.fib(14))
-	println(C.movevmfib(14))
+	println(C.moveRecFib(14))
+	println(C.moveImpFib(14))
 }

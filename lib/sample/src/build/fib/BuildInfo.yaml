@@ -2,7 +2,7 @@
 compiled_package_info:
   package_name: fib
   address_alias_instantiation: {}
-  source_digest: 7F7B2802DCC8E039D3E2C665A3797352C5E2B4E9F7E7F868B6D42797230AA40A
+  source_digest: 15F5D988CE029C02DE5EEC0831C54808794F98ABD486CE9A3441BB882B2CE5D8
   build_flags:
     dev_mode: false
     test_mode: false

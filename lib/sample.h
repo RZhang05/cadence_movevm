@@ -2,5 +2,6 @@
 // this header automatically from your Rust code.  But for now, we'll just write it by hand.
 
 int fib(int a);
-int movevmfib(int a);
+int moveRecFib(int a);
+int moveImpFib(int a);
 void movevmload();

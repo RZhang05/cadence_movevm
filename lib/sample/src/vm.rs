@@ -14,14 +14,14 @@ use std::fs;
 
 const TEST_ADDR: AccountAddress = AccountAddress::new([42; AccountAddress::LENGTH]);
 
-pub fn run_module(file_path: &str, param: u64) -> u64 {
+pub fn run_module(file_path: &str, fun_name: &str, param: u64) -> u64 {
     let bytecode =
         fs::read(file_path).expect("Unable to read bytecode file");
 
     let module = CompiledModule::deserialize(&bytecode).expect("success"); // deserialize (aptos) instead of deserialize_with_defaults (sui)
         
     // function to call
-    let fun_name = Identifier::new("fib").unwrap();
+    let fun_name = Identifier::new(fun_name).unwrap();
 
     let storage = BlankStorage::new();
 
@@ -62,9 +62,6 @@ pub fn load_module(file_path: &str) {
         fs::read(file_path).expect("Unable to read bytecode file");
 
     let _module = CompiledModule::deserialize(&bytecode).expect("success"); // deserialize (aptos) instead of deserialize_with_defaults (sui)
-        
-    // function to call
-    let _fun_name = Identifier::new("fib").unwrap();
 
     let storage = BlankStorage::new();
 
