@@ -6,7 +6,7 @@ use move_core_types::{
     identifier::Identifier,
     value::{serialize_values, MoveValue}, // value (aptos) instead of runtime_value (sui)
 };
-use move_vm_test_utils::{ BlankStorage };
+use move_vm_test_utils::InMemoryStorage;
 use move_vm_types::gas::UnmeteredGasMeter;
 use move_binary_format::file_format::CompiledModule;
 use std::{
@@ -28,11 +28,18 @@ pub fn bench_recursive_fib(c: &mut Criterion) {
     // function to call
     let fun_name = Identifier::new("recur_fib").unwrap();
 
-    let storage = BlankStorage::new();
+    // basic code cache
+    let mut storage = InMemoryStorage::new();
 
     let vm = MoveVM::new(vec![]).unwrap();
     let mut sess = vm.new_session(&storage);
     sess.publish_module(bytecode, TEST_ADDR, &mut UnmeteredGasMeter).expect("module must load");
+
+    let (changeset, _) = sess.finish().expect("failure getting write set");
+
+    storage.apply(changeset).expect("failure applying write set");
+
+    sess = vm.new_session(&storage);
 
     let args = serialize_values(&vec![MoveValue::U64(black_box(PARAM))]);
 
@@ -60,11 +67,17 @@ pub fn bench_imperative_fib(c: &mut Criterion) {
     // function to call
     let fun_name = Identifier::new("imper_fib").unwrap();
 
-    let storage = BlankStorage::new();
+    let mut storage = InMemoryStorage::new();
 
     let vm = MoveVM::new(vec![]).unwrap();
     let mut sess = vm.new_session(&storage);
     sess.publish_module(bytecode, TEST_ADDR, &mut UnmeteredGasMeter).expect("module must load");
+
+    let (changeset, _) = sess.finish().expect("failure getting write set");
+
+    storage.apply(changeset).expect("failure applying write set");
+
+    sess = vm.new_session(&storage);
 
     let args = serialize_values(&vec![MoveValue::U64(black_box(PARAM))]);
 
