@@ -9,12 +9,15 @@ use move_core_types::{
 use move_vm_test_utils::{ BlankStorage };
 use move_vm_types::gas::UnmeteredGasMeter;
 use move_binary_format::file_format::CompiledModule;
-use std::fs;
+use std::{
+    fs,
+    env,
+};
 
 const TEST_ADDR: AccountAddress = AccountAddress::new([42; AccountAddress::LENGTH]);
 
 pub fn bench_recursive_fib(c: &mut Criterion) {
-    const FILE_PATH: &str = "/home/dev/work/cadence_movevm/lib/sample/src/build/fib/bytecode_modules/M.mv";
+    let FILE_PATH: String = format!("{}/src/build/fib/bytecode_modules/M.mv", env::current_dir().expect("valid cwd").display());
     const PARAM: u64 = 14;
 
     let bytecode =

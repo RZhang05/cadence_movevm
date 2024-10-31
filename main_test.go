@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func BenchmarkMoveVMRecFib(b *testing.B) {
+func BenchmarkMoveVMRecFib14(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 
@@ -13,7 +13,7 @@ func BenchmarkMoveVMRecFib(b *testing.B) {
 	}
 }
 
-func BenchmarkMoveVMFibRecEmpty(b *testing.B) {
+func BenchmarkMoveVMRecFib1(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 
@@ -22,7 +22,7 @@ func BenchmarkMoveVMFibRecEmpty(b *testing.B) {
 	}
 }
 
-func BenchmarkMoveVMImpFib(b *testing.B) {
+func BenchmarkMoveVMImpFib14(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 
@@ -31,7 +31,7 @@ func BenchmarkMoveVMImpFib(b *testing.B) {
 	}
 }
 
-func BenchmarkMoveVMFibImpEmpty(b *testing.B) {
+func BenchmarkMoveVMImpFib1(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
 

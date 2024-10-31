@@ -14,7 +14,7 @@ use std::fs;
 
 const TEST_ADDR: AccountAddress = AccountAddress::new([42; AccountAddress::LENGTH]);
 
-pub fn run_module(file_path: &str, fun_name: &str, param: u64) -> u64 {
+pub fn run_module(file_path: String, fun_name: &str, param: u64) -> u64 {
     let bytecode =
         fs::read(file_path).expect("Unable to read bytecode file");
 
@@ -57,7 +57,7 @@ pub fn run_module(file_path: &str, fun_name: &str, param: u64) -> u64 {
     return end;
 }
 
-pub fn load_module(file_path: &str) {
+pub fn load_module(file_path: String) {
     let bytecode =
         fs::read(file_path).expect("Unable to read bytecode file");
 
