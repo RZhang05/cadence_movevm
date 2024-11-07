@@ -1,6 +1,11 @@
 use criterion::{black_box, Criterion, criterion_group, criterion_main};
 
-use move_vm_runtime::{move_vm::MoveVM, AsUnsyncModuleStorage};
+use move_vm_runtime::{
+    move_vm::MoveVM, 
+    AsUnsyncModuleStorage,
+    module_traversal::{TraversalContext, TraversalStorage},
+    RuntimeEnvironment,
+};
 use move_core_types::{
     identifier::Identifier,
     value::{serialize_values, MoveValue}, // value (aptos) instead of runtime_value (sui)
@@ -12,8 +17,6 @@ use std::{
     fs,
     env,
 };
-use move_vm_runtime::module_traversal::{TraversalContext, TraversalStorage};
-use move_vm_runtime::RuntimeEnvironment;
 
 pub fn bench_recursive_fib(c: &mut Criterion) {
     bench_fib(c, "recur_fib");
@@ -33,7 +36,7 @@ pub fn bench_fib(c: &mut Criterion, fun_name: &str) {
     let module = CompiledModule::deserialize(&bytecode).expect("success"); // deserialize (aptos) instead of deserialize_with_defaults (sui)
 
     // function to call
-    let fun_name = Identifier::new(fun_name).unwrap();
+    let fun = Identifier::new(fun_name).unwrap();
 
     // basic code cache
     let mut storage = InMemoryStorage::new();
@@ -56,7 +59,7 @@ pub fn bench_fib(c: &mut Criterion, fun_name: &str) {
         b.iter(||
             sess.execute_function_bypass_visibility(
                 &module.self_id(),
-                &fun_name,
+                &fun,
                 vec![],
                 args.clone(),
                 &mut UnmeteredGasMeter,
