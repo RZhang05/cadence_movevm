@@ -22,6 +22,10 @@ func MoveVMLoad() {
 	C.movevmload()
 }
 
+func MoveVMCreateStruct() {
+	C.movevm_createstruct();
+}
+
 func main() {
 	println(C.fib(14))
 	println(C.moveRecFib(14))
