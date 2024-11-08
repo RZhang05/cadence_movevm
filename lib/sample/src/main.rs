@@ -1,3 +1,4 @@
 mod vm;
- 
-fn main() {}
+
+fn main() {
+}

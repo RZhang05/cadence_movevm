@@ -9,3 +9,4 @@ int moveRecFib(int a);
 int moveImpFib(int a);
 void movevmload();
 Foo movevm_createstruct();
+void test();
