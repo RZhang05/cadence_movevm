@@ -1,8 +1,11 @@
-fn main() {
-    let path = "./go_lib";
-    let lib = "main";
+use std::path::Path;
+use std::env;
 
-    println!("cargo:rustc-link-arg=-Wl,-rpath,/home/dev/work/cadence_movevm/lib/sample/go_lib");
+fn main() {
+    let dir = env::var("CARGO_MANIFEST_DIR").unwrap() + "/go_lib";
+    let path = Path::new(&dir).display();
+    let lib = "main";
+    println!("cargo:rustc-link-arg=-Wl,-rpath,{}", path);
     println!("cargo:rustc-link-lib=dylib={}", lib);
     println!("cargo:rustc-link-search=native={}", path);
     
