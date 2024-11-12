@@ -10,6 +10,7 @@ build-all: build-dynamic
 build-dynamic:
 	@cd lib/sample && cargo build --release
 	@cp lib/sample/target/release/libsample.so lib/
+	lib/sample/go_lib make
 	go build -ldflags="-r $(ROOT_DIR)lib" main.go
 
 .PHONY: run-dynamic

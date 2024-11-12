@@ -10,3 +10,4 @@ int moveImpFib(int a);
 void movevmload();
 Foo movevm_createstruct();
 void test();
+void test_composite_conversion();

@@ -13,23 +13,28 @@ func DoSomething(str string) interface{} {
 
 //export GetMember
 func GetMember(v interface{}) interface{} {
+	var str = "failed"
+	switch v:= v.(type) {
 	// v is expected to be a compositeValue
-	return C.CString("does something")
+	case *CompositeValue:
+			str = v.QualifiedIdentifier
+	}
+	return C.CString(str)
 }
 
 //export CreateComposite
 func CreateComposite(
-	moveLoc int,
-	moveKind int,
+	moveLoc string,
+	moveKind uint,
 	moveQualifiedIdentifier string,
 	//fields []interpreter.CompositeField,
-	moveAddress int,
+	moveAddress string,
 ) interface{} {
-	// derive these fields from params
-	var runtime *MoveRuntime
-	var location common.Location
-	var kind common.CompositeKind
-	var address common.Address
+	// TODO: derive these fields from params
+	var runtime = NewMoveRuntime()
+	var location = NewAddressLocationFromHex(moveAddress, moveQualifiedIdentifier)
+	var kind common.CompositeKind =  common.CompositeKind(moveKind)
+	var address common.Address = common.ZeroAddress
 
 	return NewCompositeValue(
 		runtime,

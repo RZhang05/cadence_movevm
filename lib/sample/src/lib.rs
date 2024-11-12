@@ -16,6 +16,15 @@ pub mod vm;
 
 extern "C" {
     fn DoSomething(str: GoString) -> GoInterface;
+
+    fn CreateComposite(
+        moveLoc: GoString, 
+        moveKind: u64, 
+        moveQualifiedIdentifier: GoString, 
+        moveAddress: GoString,
+    ) -> GoInterface;
+
+    fn GetMember(v: GoInterface) -> GoInterface;
 }
 
 #[repr(C)]
@@ -30,18 +39,40 @@ struct GoInterface {
     v: *mut c_void,
 }
 
-#[no_mangle]
-pub extern "C" fn test() {
-    let c_path = CString::new("test").expect("CString::new failed");
-    let ptr = c_path.as_ptr();
+fn create_go_string(c_str: &CString) -> GoString {
+    let ptr = c_str.as_ptr();
     let go_string = GoString {
         a: ptr,
-        b: c_path.as_bytes().len() as i64,
+        b: c_str.as_bytes().len() as i64,
     };
+    return go_string
+}
+
+#[no_mangle]
+pub extern "C" fn test() {
+    let s = CString::new("test").expect("CString::new failed");
+    let go_string = create_go_string(&s);
     let msg = unsafe { DoSomething(go_string) };
     assert!(!msg.v.is_null());
     // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
     let cstr = unsafe {CStr::from_ptr(msg.v as *const _)}.to_string_lossy();
+    println!("result: {}", cstr);
+}
+
+#[no_mangle]
+pub extern "C" fn test_composite_conversion() {
+    let c_iden = CString::new("foo").expect("CString::new failed");
+    let go_iden = create_go_string(&c_iden);
+    let c_addr = CString::new("0x1").expect("CString::new failed");
+    let go_addr = create_go_string(&c_addr);
+    let go_loc = create_go_string(&c_addr);
+
+    let tmp = unsafe{ CreateComposite(go_loc, 0, go_iden, go_addr) };
+    let result = unsafe { GetMember(tmp) }; // return foo the name of the composite
+    
+    assert!(!result.v.is_null());
+    // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
+    let cstr = unsafe {CStr::from_ptr(result.v as *const _)}.to_string_lossy();
     println!("result: {}", cstr);
 }
 

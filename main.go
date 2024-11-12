@@ -31,4 +31,5 @@ func main() {
 	println(C.moveRecFib(14))
 	println(C.moveImpFib(14))
 	C.test()
+	C.test_composite_conversion()
 }
