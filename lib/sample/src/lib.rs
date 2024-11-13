@@ -54,6 +54,7 @@ fn create_go_string(c_str: &CString) -> GoString {
 
 #[no_mangle]
 pub extern "C" fn test_composite_conversion() {
+    // clean up?
     let c_iden = CString::new("foo").expect("CString::new failed");
     let go_iden = create_go_string(&c_iden);
     let c_addr = CString::new("0x1").expect("CString::new failed");
@@ -77,7 +78,7 @@ pub extern "C" fn test_composite_conversion() {
     assert!(!result.v.is_null());
     // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
     let cstr = unsafe {CStr::from_ptr(result.v as *const _)}.to_string_lossy();
-    println!("result: {}", cstr);
+    // println!("result: {}", cstr);
 }
 
 fn fibonacci(n: u64) -> u64 {

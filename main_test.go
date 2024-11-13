@@ -66,3 +66,12 @@ func BenchmarkMoveVMCallGoExtern(b *testing.B) {
 		MoveVMEmptyExtern()
 	}
 }
+
+func BenchmarkMoveVMComposite(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		MoveVMComposite()
+	}
+}

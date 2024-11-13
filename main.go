@@ -30,6 +30,10 @@ func MoveVMEmptyExtern() {
 	C.moveEmptyExtern();
 }
 
+func MoveVMComposite() {
+	C.test_composite_conversion();
+}
+
 func main() {
 	println(C.fib(14))
 	println(C.moveRecFib(14))

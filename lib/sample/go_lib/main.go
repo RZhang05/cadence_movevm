@@ -25,7 +25,6 @@ func GetMember(key uintptr, fieldName string) interface{} {
 
 //export SetMember
 func SetMember(key uintptr, fieldName string, value unsafe.Pointer) {
-	// TODO: accept void* instead of string for value?
 	var v = composites[key]
 
 	var stringValue = *(*string)(value)
