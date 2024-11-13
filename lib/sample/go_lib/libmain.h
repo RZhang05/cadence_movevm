@@ -74,9 +74,8 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-extern GoInterface DoSomething(GoString str);
-extern GoInterface GetMember(GoInterface v);
-extern GoInterface CreateComposite(GoString moveLoc, GoUint moveKind, GoString moveQualifiedIdentifier, GoString moveAddress);
+extern GoInterface GetMember(GoUintptr key);
+extern GoUintptr CreateComposite(GoString moveLoc, GoUint moveKind, GoString moveQualifiedIdentifier, GoString moveAddress);
 
 #ifdef __cplusplus
 }

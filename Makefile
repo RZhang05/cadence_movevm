@@ -8,9 +8,9 @@ build-all: build-dynamic
 
 .PHONY: build-dynamic
 build-dynamic:
+	@cd lib/sample/go_lib && go build -o libmain.so -buildmode=c-shared .
 	@cd lib/sample && cargo build --release
 	@cp lib/sample/target/release/libsample.so lib/
-	lib/sample/go_lib make
 	go build -ldflags="-r $(ROOT_DIR)lib" main.go
 
 .PHONY: run-dynamic

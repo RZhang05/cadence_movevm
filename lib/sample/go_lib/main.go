@@ -4,22 +4,18 @@ import (
 	"C"
 
 	"github.com/onflow/cadence/common"
+
+	"unsafe"
 )
 
-//export DoSomething
-func DoSomething(str string) interface{} {
-	return C.CString("hello")
-}
+// global unsafe pointer storage
+var composites = make(map[uintptr]*CompositeValue)
 
 //export GetMember
-func GetMember(v interface{}) interface{} {
-	var str = "failed"
-	switch v:= v.(type) {
-	// v is expected to be a compositeValue
-	case *CompositeValue:
-			str = v.QualifiedIdentifier
-	}
-	return C.CString(str)
+func GetMember(key uintptr) interface{} {
+	var v = composites[key]
+
+	return C.CString(v.QualifiedIdentifier)
 }
 
 //export CreateComposite
@@ -29,14 +25,14 @@ func CreateComposite(
 	moveQualifiedIdentifier string,
 	//fields []interpreter.CompositeField,
 	moveAddress string,
-) interface{} {
+) uintptr {
 	// TODO: derive these fields from params
 	var runtime = NewMoveRuntime()
 	var location = NewAddressLocationFromHex(moveAddress, moveQualifiedIdentifier)
 	var kind common.CompositeKind =  common.CompositeKind(moveKind)
 	var address common.Address = common.ZeroAddress
 
-	return NewCompositeValue(
+	var go_struct = NewCompositeValue(
 		runtime,
 		location,
 		moveQualifiedIdentifier,
@@ -44,6 +40,16 @@ func CreateComposite(
 		//fields
 		address,
 	)
+
+	// this struct is allocated and stored on the go side
+	// cgo does not allow passing a pointer to go memory to C
+	// so instead we abstract away this pointer
+	// this is likely slower than the alternative of C.malloc
+	// but 100% memory safe
+	// https://groups.google.com/g/golang-nuts/c/uW9ehN4uXrM
+	key := uintptr(unsafe.Pointer(go_struct))
+	composites[key] = go_struct
+	return key
 }
 
 func main() {}

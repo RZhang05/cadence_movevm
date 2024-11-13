@@ -49,17 +49,6 @@ fn create_go_string(c_str: &CString) -> GoString {
 }
 
 #[no_mangle]
-pub extern "C" fn test() {
-    let s = CString::new("test").expect("CString::new failed");
-    let go_string = create_go_string(&s);
-    let msg = unsafe { DoSomething(go_string) };
-    assert!(!msg.v.is_null());
-    // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
-    let cstr = unsafe {CStr::from_ptr(msg.v as *const _)}.to_string_lossy();
-    println!("result: {}", cstr);
-}
-
-#[no_mangle]
 pub extern "C" fn test_composite_conversion() {
     let c_iden = CString::new("foo").expect("CString::new failed");
     let go_iden = create_go_string(&c_iden);
