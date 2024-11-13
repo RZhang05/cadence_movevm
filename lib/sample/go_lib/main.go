@@ -10,12 +10,30 @@ import (
 
 // global unsafe pointer storage
 var composites = make(map[uintptr]*CompositeValue)
+var runtime = NewMoveRuntime()
 
 //export GetMember
-func GetMember(key uintptr) interface{} {
+func GetMember(key uintptr, fieldName string) interface{} {
 	var v = composites[key]
 
-	return C.CString(v.QualifiedIdentifier)
+	var string_result string = v.GetMember(
+		fieldName,
+	).(string)
+	
+	return C.CString(string_result)
+}
+
+//export SetMember
+func SetMember(key uintptr, fieldName string, value unsafe.Pointer) {
+	// TODO: accept void* instead of string for value?
+	var v = composites[key]
+
+	var stringValue = *(*string)(value)
+
+	v.SetMember(
+		fieldName,
+		stringValue,
+	)
 }
 
 //export EmptyFunc
@@ -29,8 +47,6 @@ func CreateComposite(
 	//fields []interpreter.CompositeField,
 	moveAddress string,
 ) uintptr {
-	// TODO: derive these fields from params
-	var runtime = NewMoveRuntime()
 	var location = NewAddressLocationFromHex(moveAddress, moveQualifiedIdentifier)
 	var kind common.CompositeKind =  common.CompositeKind(moveKind)
 	var address common.Address = common.ZeroAddress

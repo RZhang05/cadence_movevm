@@ -22,11 +22,13 @@ extern "C" {
         moveKind: u64, 
         moveQualifiedIdentifier: GoString, 
         moveAddress: GoString,
-    ) -> GoInterface;
+    ) -> u64;
 
-    fn GetMember(v: GoInterface) -> GoInterface;
+    fn GetMember(key: u64, fieldName: GoString) -> GoInterface;
 
     fn EmptyFunc();
+
+    fn SetMember(key: u64, fieldName: GoString, value: *const c_void);
 }
 
 #[repr(C)]
@@ -57,9 +59,20 @@ pub extern "C" fn test_composite_conversion() {
     let c_addr = CString::new("0x1").expect("CString::new failed");
     let go_addr = create_go_string(&c_addr);
     let go_loc = create_go_string(&c_addr);
+    let c_fieldname = CString::new("a").expect("CString::new failed");
+    let go_fieldname = create_go_string(&c_fieldname);
+    let go_fieldname2 = create_go_string(&c_fieldname);
+    let c_val = CString::new("some random string").expect("CString::new failed");
+    let go_val = create_go_string(&c_val);
+    let go_ptr: *const GoString = &go_val;
+    let rawptr = go_ptr as *const c_void;
 
+    // foo {
+    //      a: "some random string"
+    // }
     let tmp = unsafe{ CreateComposite(go_loc, 0, go_iden, go_addr) };
-    let result = unsafe { GetMember(tmp) }; // return foo the name of the composite
+    unsafe{ SetMember(tmp, go_fieldname, rawptr) };
+    let result = unsafe { GetMember(tmp, go_fieldname2) };
     
     assert!(!result.v.is_null());
     // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
