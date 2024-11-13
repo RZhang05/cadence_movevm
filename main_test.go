@@ -57,3 +57,12 @@ func BenchmarkMoveVMCreateStruct(b *testing.B) {
 		MoveVMCreateStruct()
 	}
 }
+
+func BenchmarkMoveVMCallGoExtern(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		MoveVMEmptyExtern()
+	}
+}

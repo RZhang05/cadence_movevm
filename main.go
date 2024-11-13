@@ -26,6 +26,10 @@ func MoveVMCreateStruct() {
 	C.movevm_createstruct();
 }
 
+func MoveVMEmptyExtern() {
+	C.moveEmptyExtern();
+}
+
 func main() {
 	println(C.fib(14))
 	println(C.moveRecFib(14))

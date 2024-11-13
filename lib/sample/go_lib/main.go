@@ -18,6 +18,9 @@ func GetMember(key uintptr) interface{} {
 	return C.CString(v.QualifiedIdentifier)
 }
 
+//export EmptyFunc
+func EmptyFunc() {}
+
 //export CreateComposite
 func CreateComposite(
 	moveLoc string,

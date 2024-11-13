@@ -25,6 +25,8 @@ extern "C" {
     ) -> GoInterface;
 
     fn GetMember(v: GoInterface) -> GoInterface;
+
+    fn EmptyFunc();
 }
 
 #[repr(C)]
@@ -117,4 +119,9 @@ pub extern "C" fn movevm_createstruct() {
         _ => {}
     }
     return;
+}
+
+#[no_mangle]
+pub extern "C" fn moveEmptyExtern() {
+    unsafe{ EmptyFunc() };
 }
