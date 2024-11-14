@@ -62,7 +62,6 @@ func CreateComposite(
 	// this struct is allocated and stored on the go side
 	// cgo does not allow passing a pointer to go memory to C
 	// so instead we abstract away this pointer
-	// this is likely slower than the alternative of C.malloc
 	// but 100% memory safe
 	// https://groups.google.com/g/golang-nuts/c/uW9ehN4uXrM
 	key := uintptr(unsafe.Pointer(go_struct))

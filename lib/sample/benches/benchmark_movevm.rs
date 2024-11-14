@@ -18,6 +18,76 @@ use std::{
     env,
 };
 
+// use std::ffi::{CString, c_void};
+// use std::os::raw::c_char;
+
+// use sample::vm;
+
+// extern "C" {
+//     fn CreateComposite(
+//         moveLoc: GoString, 
+//         moveKind: u64, 
+//         moveQualifiedIdentifier: GoString, 
+//         moveAddress: GoString,
+//     ) -> u64;
+
+//     fn GetMember(key: u64, fieldName: GoString) -> GoInterface;
+
+//     fn SetMember(key: u64, fieldName: GoString, value: *const c_void);
+// }
+
+
+// #[repr(C)]
+// struct GoString {
+//     a: *const c_char,
+//     b: i64,
+// }
+
+// #[repr(C)]
+// struct GoInterface {
+//     t: *mut c_void,
+//     v: *mut c_void,
+// }
+
+// fn create_go_string(c_str: &CString) -> GoString {
+//     let ptr = c_str.as_ptr();
+//     let go_string = GoString {
+//         a: ptr,
+//         b: c_str.as_bytes().len() as i64,
+//     };
+//     return go_string
+// }
+
+// pub fn test_composite_conversion() {
+//     let c_iden = CString::new("foo").expect("CString::new failed");
+//     let go_iden = create_go_string(&c_iden);
+//     let c_addr = CString::new("0x1").expect("CString::new failed");
+//     let go_addr = create_go_string(&c_addr);
+//     let go_loc = create_go_string(&c_addr);
+//     let c_fieldname = CString::new("a").expect("CString::new failed");
+//     let go_fieldname = create_go_string(&c_fieldname);
+//     let go_fieldname2 = create_go_string(&c_fieldname);
+//     let c_val = CString::new("some random string").expect("CString::new failed");
+//     let go_val = create_go_string(&c_val);
+//     let go_ptr: *const GoString = &go_val;
+//     let rawptr = go_ptr as *const c_void;
+
+//     // foo {
+//     //      a: "some random string"
+//     // }
+//     let tmp = unsafe{ CreateComposite(go_loc, 0, go_iden, go_addr) };
+//     unsafe{ SetMember(tmp, go_fieldname, rawptr) };
+//     let _result = unsafe { GetMember(tmp, go_fieldname2) };
+// }
+
+// pub fn bench_composite(c: &mut Criterion) {
+//     c.bench_function("bench composite", |b| {
+//         b.iter(||
+//             test_composite_conversion()
+//         )
+//     });
+// }
+
 pub fn bench_recursive_fib(c: &mut Criterion) {
     bench_fib(c, "recur_fib");
 }
@@ -73,6 +143,7 @@ criterion_group!(
     benches,
     bench_recursive_fib,
     bench_imperative_fib,
+    bench_composite,
 );
 
 criterion_main!(benches,);
