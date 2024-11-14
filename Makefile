@@ -16,6 +16,7 @@ build-dynamic:
 .PHONY: run-dynamic
 run-dynamic: build-dynamic
 	@./main
+	@cd lib/sample/go_lib && go test --bench=.
 	go test -ldflags="-r $(ROOT_DIR)lib" --bench=.
 
 # This is just for running the Rust lib tests natively via cargo

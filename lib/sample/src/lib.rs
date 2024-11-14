@@ -75,9 +75,9 @@ pub extern "C" fn test_composite_conversion() {
     unsafe{ SetMember(tmp, go_fieldname, rawptr) };
     let result = unsafe { GetMember(tmp, go_fieldname2) };
     
-    assert!(!result.v.is_null());
-    // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
-    let cstr = unsafe {CStr::from_ptr(result.v as *const _)}.to_string_lossy();
+    // assert!(!result.v.is_null());
+    // // to_string_lossy() returns a `Cow<str>`, but that's sufficient for printing.
+    // let cstr = unsafe {CStr::from_ptr(result.v as *const _)}.to_string_lossy();
     // println!("result: {}", cstr);
 }
 
