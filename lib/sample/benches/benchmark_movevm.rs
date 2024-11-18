@@ -143,7 +143,7 @@ criterion_group!(
     benches,
     bench_recursive_fib,
     bench_imperative_fib,
-    bench_composite,
+    // bench_composite,
 );
 
 criterion_main!(benches,);
