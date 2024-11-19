@@ -2492,6 +2492,7 @@ dependencies = [
  "libc",
  "move-binary-format",
  "move-core-types",
+ "move-stdlib",
  "move-vm-integration-tests",
  "move-vm-runtime",
  "move-vm-test-utils",

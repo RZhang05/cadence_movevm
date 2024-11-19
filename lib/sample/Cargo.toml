@@ -18,6 +18,7 @@ move-vm-test-utils = { path = "/home/dev/work/aptos-core/third_party/move/move-v
 move-vm-types = { path = "/home/dev/work/aptos-core/third_party/move/move-vm/types" }
 move-binary-format = { path = "/home/dev/work/aptos-core/third_party/move/move-binary-format" }
 move-vm-integration-tests = { path = "/home/dev/work/aptos-core/third_party/move/move-vm/integration-tests" }
+move-stdlib = { path = "/home/dev/work/aptos-core/third_party/move/move-stdlib" }
 criterion = "0.3"
 
 [[bench]]

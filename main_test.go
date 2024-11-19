@@ -4,6 +4,15 @@ import (
 	"testing"
 )
 
+func BenchmarkMoveVMComposite(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		MoveVMComposite()
+	}
+}
+
 func BenchmarkMoveVMRecFib14(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -46,32 +55,5 @@ func BenchmarkMoveVMLoadOnly(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		MoveVMLoad()
-	}
-}
-
-func BenchmarkMoveVMCreateStruct(b *testing.B) {
-	b.ReportAllocs()
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		MoveVMCreateStruct()
-	}
-}
-
-func BenchmarkMoveVMCallGoExtern(b *testing.B) {
-	b.ReportAllocs()
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		MoveVMEmptyExtern()
-	}
-}
-
-func BenchmarkMoveVMComposite(b *testing.B) {
-	b.ReportAllocs()
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		MoveVMComposite()
 	}
 }

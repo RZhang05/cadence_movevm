@@ -26,10 +26,6 @@ func MoveVMCreateStruct() {
 	C.movevm_createstruct();
 }
 
-func MoveVMEmptyExtern() {
-	C.moveEmptyExtern();
-}
-
 func MoveVMComposite() {
 	C.test_composite_conversion();
 }
