@@ -1,8 +1,9 @@
 ---
 compiled_package_info:
   package_name: fib
-  address_alias_instantiation: {}
-  source_digest: 75DB6A6DCD02AA5EF507A23B221D6BF6CBDC9191E00588CB004EF00F99BEBD21
+  address_alias_instantiation:
+    std: "0000000000000000000000000000000000000000000000000000000000000001"
+  source_digest: 71E3B742A7849A63DD19E6A12FF9E5F28FAE5FC01BF81CDA2C3A45838B5C6BD6
   build_flags:
     dev_mode: false
     test_mode: false
@@ -42,5 +43,6 @@ compiled_package_info:
       language_version: ~
       experiments:
         - optimize=on
-dependencies: []
+dependencies:
+  - MoveStdlib
 bytecode_deps: []
