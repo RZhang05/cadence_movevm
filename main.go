@@ -30,6 +30,10 @@ func MoveVMComposite() {
 	C.test_composite_conversion();
 }
 
+func MoveVMCreateComposite() {
+	C.create_composite();
+}
+
 func main() {
 	println(C.fib(14))
 	println(C.moveRecFib(14))

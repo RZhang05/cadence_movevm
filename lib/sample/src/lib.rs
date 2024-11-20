@@ -3,6 +3,7 @@ use vm::{
     load_module,
     run_create_struct,
     run_composite,
+    create_move_composite,
 };
 use move_core_types::{
     value::{MoveValue, MoveStruct, MoveStructLayout}
@@ -10,6 +11,11 @@ use move_core_types::{
 use std::env;
 
 pub mod vm;
+
+#[no_mangle]
+pub extern "C" fn create_composite() {
+    create_move_composite();
+}
 
 #[no_mangle]
 pub extern "C" fn test_composite_conversion() {

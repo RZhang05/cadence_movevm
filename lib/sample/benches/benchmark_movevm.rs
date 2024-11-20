@@ -29,7 +29,7 @@ pub fn bench_composite(c: &mut Criterion) {
     let module = CompiledModule::deserialize(&bytecode).expect("success"); // deserialize (aptos) instead of deserialize_with_defaults (sui)
 
     // function to call
-    let fun = Identifier::new("test_full_composite").unwrap();
+    let fun = Identifier::new("create_composite").unwrap();
 
     // basic code cache
     let mut storage = InMemoryStorage::new();
@@ -71,15 +71,18 @@ pub fn bench_composite(c: &mut Criterion) {
 
     c.bench_function("bench composite", |b| {
         b.iter(||
-            sess.execute_function_bypass_visibility(
-                &module.self_id(),
-                &fun,
-                vec![],
-                args.clone(),
-                &mut UnmeteredGasMeter,
-                &mut TraversalContext::new(&traversal_storage),
-                &module_storage,
-            ))
+            for _ in 1..10 {
+                sess.execute_function_bypass_visibility(
+                    &module.self_id(),
+                    &fun,
+                    vec![],
+                    args.clone(),
+                    &mut UnmeteredGasMeter,
+                    &mut TraversalContext::new(&traversal_storage),
+                    &module_storage,
+                );
+            }
+        )
     });
 }
 

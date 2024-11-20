@@ -9,7 +9,8 @@ func BenchmarkMoveVMComposite(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		MoveVMComposite()
+		// too unfair to create 10 composites here since this requires reloading and instantiating all modules 10 times as well
+		MoveVMCreateComposite()
 	}
 }
 

@@ -23,4 +23,10 @@ module 0x2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a2a::M2 {
         let result = extern_cadence::get_member(&obj, &field);
     }
 
+    public fun create_composite() {
+        let iden = string::utf8(b"foo");
+        let address = string::utf8(b"0x1");
+        let obj = extern_cadence::create_composite(&address, 0, &iden);
+    }
+
 }

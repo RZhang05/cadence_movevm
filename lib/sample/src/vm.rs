@@ -206,3 +206,64 @@ pub fn run_composite() {
         &module_storage,
     ).unwrap();
 }
+
+pub fn create_move_composite() {
+    let FILE_PATH: String = format!("{}/lib/sample/src/build/fib/bytecode_modules/M2.mv", env::current_dir().expect("valid cwd").display());
+    
+    let bytecode =
+        fs::read(FILE_PATH).expect("Unable to read bytecode file");
+
+    let module = CompiledModule::deserialize(&bytecode).expect("success"); // deserialize (aptos) instead of deserialize_with_defaults (sui)
+
+    // function to call
+    let fun = Identifier::new("create_composite").unwrap();
+
+    // basic code cache
+    let mut storage = InMemoryStorage::new();
+
+    let natives = move_stdlib::natives::all_natives(
+        AccountAddress::from_hex_literal("0x1").unwrap(),
+        move_stdlib::natives::GasParameters::zeros(),
+    );
+    let runtime_environment = RuntimeEnvironment::new(natives);
+    let vm = MoveVM::new_with_runtime_environment(&runtime_environment);
+
+    let module_id = module.self_id();
+    let mut module_blob = vec![];
+    module.serialize(&mut module_blob).unwrap();
+
+    storage.add_module_bytes(module_id.address(), module_id.name(), module_blob.into());
+
+    // add native dependencies, this should not be a factor on performance in reality, but may significantly impact performance here
+    let paths = fs::read_dir(format!("{}/lib/sample/src/build/fib/bytecode_modules/dependencies/MoveStdlib/", env::current_dir().expect("valid cwd").display())).unwrap();
+
+    for path in paths {
+        let native_bytecode =
+        fs::read(path.unwrap().path()).expect("Unable to read bytecode file");
+    
+        let native_module = CompiledModule::deserialize(&native_bytecode).expect("success");
+
+        let native_module_id = native_module.self_id();
+        let mut native_blob = vec![];
+        native_module.serialize(&mut native_blob).unwrap();
+
+        storage.add_module_bytes(native_module_id.address(), native_module_id.name(), native_blob.into());
+    }
+
+    let module_storage = storage.as_unsync_module_storage(runtime_environment);
+    let mut sess = vm.new_session(&storage);
+
+    let args = serialize_values(&vec![]);
+    let traversal_storage = TraversalStorage::new();
+
+    sess.
+    execute_function_bypass_visibility(
+        &module.self_id(),
+        &fun,
+        vec![],
+        args.clone(),
+        &mut UnmeteredGasMeter,
+        &mut TraversalContext::new(&traversal_storage),
+        &module_storage,
+    ).unwrap();
+}
