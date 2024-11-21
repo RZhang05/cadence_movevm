@@ -8,3 +8,4 @@ void movevmload();
 void movevm_createstruct();
 void test_composite_conversion();
 void moveEmptyExtern();
+void create_composite();

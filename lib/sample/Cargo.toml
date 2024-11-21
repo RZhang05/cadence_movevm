@@ -12,12 +12,13 @@ crate-type = ["cdylib"]
 
 [dependencies]
 libc = "0.2.2"
-move-vm-runtime = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "2d95075" }
-move-core-types = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "2d95075" }
-move-vm-test-utils = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "2d95075" }
-move-vm-types = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "2d95075" }
-move-binary-format = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "2d95075" }
-move-vm-integration-tests = { git = "https://github.com/aptos-labs/aptos-core.git", rev = "2d95075" }
+move-vm-runtime = { path = "../../../aptos-core/third_party/move/move-vm/runtime" }
+move-core-types = { path = "../../../aptos-core/third_party/move/move-core/types" }
+move-vm-test-utils = { path = "../../../aptos-core/third_party/move/move-vm/test-utils" }
+move-vm-types = { path = "../../../aptos-core/third_party/move/move-vm/types" }
+move-binary-format = { path = "../../../aptos-core/third_party/move/move-binary-format" }
+move-vm-integration-tests = { path = "../../../aptos-core/third_party/move/move-vm/integration-tests" }
+move-stdlib = { path = "../../../aptos-core/third_party/move/move-stdlib" }
 criterion = "0.3"
 
 [[bench]]

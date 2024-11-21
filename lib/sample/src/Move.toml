@@ -1,3 +1,9 @@
 [package]
 name = "fib"
 version = "0.0.0"
+
+[dependencies.MoveStdlib]
+local = "/home/dev/work/aptos-core/third_party/move/move-stdlib"
+
+[addresses]
+std="0x1"
