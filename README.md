@@ -3,7 +3,7 @@
 An investigation into using MoveVM within Go for the purpose of Cadence compilation.
 
 ## Dependencies
-This repo uses Aptos MoveVM with commit #2d95075, as specified in `lib/sample/Cargo.toml`.
+This repo requires a local version of https://github.com/RZhang05/aptos-core/tree/composite-cadence in the same parent directory as this repo as specified in `lib/sample/Cargo.toml`.
 
 ## Build
 This repo consists of a main Go library which calls into a nested Rust library which calls into a nested Go library. This means that there are some complications with linking and the build process. This was built on linux.
