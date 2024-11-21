@@ -24,3 +24,6 @@ criterion = "0.3"
 [[bench]]
 name = "benchmark_movevm"
 harness = false
+
+[profile.release]
+debug = true
