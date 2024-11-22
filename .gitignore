@@ -28,4 +28,4 @@ go.sum
 
 # Rust
 **/target/
-**/perf.data*
+**/perf.data.old
