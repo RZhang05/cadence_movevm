@@ -39,7 +39,11 @@ pub fn bench_composite(c: &mut Criterion) {
         AccountAddress::from_hex_literal("0x1").unwrap(),
         move_stdlib::natives::GasParameters::zeros(),
     );
-    let runtime_environment = RuntimeEnvironment::new(natives);
+    let vm_config = VMConfig {
+        paranoid_type_checks: false,
+        ..VMConfig::default()
+    };
+    let runtime_environment = RuntimeEnvironment::new_with_config(natives, vm_config);
     let vm = MoveVM::new_with_runtime_environment(&runtime_environment);
 
     let module_id = module.self_id();
