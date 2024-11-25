@@ -4,6 +4,7 @@ use move_vm_runtime::{
     module_traversal::{TraversalContext, TraversalStorage},
     RuntimeEnvironment,
     session::SerializedReturnValues,
+    config::VMConfig,
 };
 use move_core_types::{
     account_address::AccountAddress,
@@ -31,7 +32,11 @@ pub fn run_func_M(file_path: String, fun_name: &str, param: u64) -> u64 {
     // basic code cache
     let mut storage = InMemoryStorage::new();
 
-    let runtime_environment = RuntimeEnvironment::new(vec![]);
+    let vm_config = VMConfig {
+        paranoid_type_checks: false,
+        ..VMConfig::default()
+    };
+    let runtime_environment = RuntimeEnvironment::new_with_config(vec![], vm_config);
     let vm = MoveVM::new_with_runtime_environment(&runtime_environment);
 
     let module_id = module.self_id();

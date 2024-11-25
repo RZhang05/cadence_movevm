@@ -33,3 +33,4 @@ https://docs.google.com/spreadsheets/d/1YDnU5YkEs8il2slYY5la9HXc5xMfxzUJNEITadL5
 2. `cd cadence_movevm/lib/sample`
 3. `cargo bench`
 4. `cargo flamegraph -c "record -c 20 --call-graph dwarf -g"` (optional)
+5. `perf record -c 90 --call-graph dwarf -g ./target/debug/sample`
